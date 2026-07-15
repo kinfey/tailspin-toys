@@ -16,6 +16,7 @@ This is a single Astro application (Astro 7 + Drizzle ORM/libSQL). All commands 
 | Unit tests (Vitest) | `npm run test:unit` | After any data-layer / transform / helper change |
 | Frontend E2E tests (Playwright) | `npm run test:e2e` | After any UI / page / component change |
 | Lint (ESLint) | `npm run lint` | After any TypeScript or Astro change |
+| Type check (tsgo + astro check) | `npm run typecheck:all` | After any TypeScript or Astro change |
 
 All commands assume dependencies are installed (`npm ci`) and, for E2E, that Playwright's Chromium browser is available (`npx playwright install chromium`).
 
@@ -49,6 +50,16 @@ npm run lint
 
 - Runs ESLint on all TypeScript and Astro files in the project.
 - Must pass with zero errors before committing.
+
+### Type check
+
+```bash
+npm run typecheck:all
+```
+
+- `npm run typecheck` runs the native **TypeScript 7** compiler (`tsgo`, from `@typescript/native-preview`) over the pure TypeScript (`db/`, `src/lib/`, `src/types/`, configs, tests) via `tsconfig.tsgo.json` (`--noEmit`).
+- `npm run typecheck:astro` runs `astro sync` then `astro check` over `.astro` files (on the classic `typescript` package).
+- Type checking is independent of linting — `tsgo` does not affect ESLint, which still uses the classic `typescript` package. Both must pass with zero errors before committing.
 
 ---
 
@@ -170,7 +181,8 @@ npx vitest run src/lib/games.test.ts
 ## Pre-Commit Checklist
 
 1. Run lint (if any frontend files changed): `npm run lint`
-2. Run unit tests (if data layer / helpers changed): `npm run test:unit`
-3. Run E2E tests (if UI changed): `npm run test:e2e`
-4. Verify new functionality has appropriate test coverage
-5. Confirm no tests were broken, skipped, or disabled
+2. Run type check (if any TypeScript / Astro files changed): `npm run typecheck:all`
+3. Run unit tests (if data layer / helpers changed): `npm run test:unit`
+4. Run E2E tests (if UI changed): `npm run test:e2e`
+5. Verify new functionality has appropriate test coverage
+6. Confirm no tests were broken, skipped, or disabled
