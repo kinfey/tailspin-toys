@@ -58,7 +58,7 @@ npm run typecheck:all
 ```
 
 - `npm run typecheck` runs the native **TypeScript 7** compiler (`tsgo`, from `@typescript/native-preview`) over the pure TypeScript (`db/`, `src/lib/`, `src/types/`, configs, tests) via `tsconfig.tsgo.json` (`--noEmit`).
-- `npm run typecheck:astro` runs `astro check` over `.astro` files (on the classic `typescript` package).
+- `npm run typecheck:astro` runs `astro sync` then `astro check` over `.astro` files (on the classic `typescript` package).
 - Type checking is independent of linting — `tsgo` does not affect ESLint, which still uses the classic `typescript` package. Both must pass with zero errors before committing.
 
 ---

@@ -17,7 +17,7 @@
     "test:e2e": "playwright test",
     "test:e2e:install": "playwright install chromium",
     "typecheck": "tsgo --noEmit -p tsconfig.tsgo.json",
-    "typecheck:astro": "astro check",
+    "typecheck:astro": "astro sync && astro check",
     "typecheck:all": "npm run typecheck && npm run typecheck:astro",
     "lint": "eslint ."
   },

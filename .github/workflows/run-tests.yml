@@ -69,11 +69,7 @@ jobs:
       - name: Install JavaScript dependencies
         run: npm ci
 
-      # Generate Astro's content/types so astro check sees the same types as the editor.
-      - name: Sync Astro types
-        run: npx astro sync
-
-      # tsgo (TS 7) for .ts + astro check (classic TS) for .astro
+      # tsgo (TS 7) for .ts + astro sync/check (classic TS) for .astro
       - name: Run type-check
         run: npm run typecheck:all
 

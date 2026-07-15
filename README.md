@@ -79,7 +79,7 @@ The project runs on **TypeScript 7** (the native Go compiler, `tsgo`) for type c
 
 ```bash
 npm run typecheck        # tsgo (TS 7) type-checks the pure TypeScript (db/, src/lib/, src/types/, configs, tests)
-npm run typecheck:astro  # astro check type-checks .astro files (on the classic TypeScript package)
+npm run typecheck:astro  # astro sync + astro check type-check .astro files (on the classic TypeScript package)
 npm run typecheck:all    # both of the above
 ```
 
