@@ -47,6 +47,36 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
+  # Type-check the codebase: pure TypeScript via the native TS 7 compiler (tsgo,
+  # from @typescript/native-preview) and .astro files via astro check (which runs
+  # on the classic TypeScript package). Linting is unaffected by either.
+  type-check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "lts/*"
+          cache: "npm"
+          cache-dependency-path: "./package-lock.json"
+
+      - name: Install JavaScript dependencies
+        run: npm ci
+
+      # Generate Astro's content/types so astro check sees the same types as the editor.
+      - name: Sync Astro types
+        run: npx astro sync
+
+      # tsgo (TS 7) for .ts + astro check (classic TS) for .astro
+      - name: Run type-check
+        run: npm run typecheck:all
+
   # Run the Vitest unit tests (pure transforms + data-access helpers)
   unit-tests:
     runs-on: ubuntu-latest

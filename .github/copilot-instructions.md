@@ -76,7 +76,13 @@ This is a crowdfunding platform for games with a developer theme. The applicatio
   - `npm run lint` — ESLint
   - `npm run test:unit` — Vitest unit tests
   - `npm run test:e2e` — Playwright E2E tests (builds + previews first)
+  - `npm run typecheck` — type-check the pure TypeScript with `tsgo` (TypeScript 7 native compiler, via `@typescript/native-preview`) using `tsconfig.tsgo.json`
+  - `npm run typecheck:astro` — type-check `.astro` files with `astro check` (classic TypeScript package)
+  - `npm run typecheck:all` — run both type-check scripts (used by the CI `type-check` job)
   - `npm run db:generate` / `db:migrate` / `db:seed` / `db:setup` — Drizzle schema/migration/seed tasks
+
+> [!NOTE]
+> TypeScript 7 (`tsgo`) is adopted **side-by-side** for type checking only; it does not affect linting. ESLint + `typescript-eslint` and `astro check` still resolve the classic `typescript` package (kept at v6) because the native compiler's API isn't ready for them yet. Do **not** bump the classic `typescript` package to 7 (a Dependabot `ignore` holds it) until `typescript-eslint` + `@astrojs/check` support the native API. `tsgo` is `--noEmit` only; the site is still built by `astro build`.
 
 ## Repository Structure
 
